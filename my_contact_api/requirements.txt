@@ -5,3 +5,7 @@ psycopg2-binary
 pydantic
 passlib[bcrypt]
 python-jose
+python-dotenv
+fastapi-limiter
+fastapi-cors
+cloudinary

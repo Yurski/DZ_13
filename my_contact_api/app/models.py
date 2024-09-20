@@ -1,7 +1,14 @@
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, Date, Boolean
 from app.database import Base
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_verified = Column(Boolean, default=False)
+    avatar_url = Column(String, nullable=True)
 
 class Contact(Base):
     __tablename__ = "contacts"
@@ -13,15 +20,3 @@ class Contact(Base):
     phone = Column(String)
     birthday = Column(Date)
     additional_data = Column(String, nullable=True)
-    owner_id = Column(Integer, ForeignKey('users.id'))
-
-    owner = relationship("User", back_populates="contacts")
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-
-    contacts = relationship("Contact", back_populates="owner")
